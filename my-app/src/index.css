@@ -1,6 +1,6 @@
 .app {
   margin: auto;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   text-align: center;
 }
@@ -20,11 +20,11 @@
 
 .react-player {
   margin-bottom: 10px;
-  background: rgba(0, 0, 0, .1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .faded {
-  color: rgba(0, 0, 0, .5);
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .footer {
