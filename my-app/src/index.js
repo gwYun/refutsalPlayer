@@ -64,6 +64,18 @@ class Video extends Component {
     const { url, played } = this.state;
     const hl = getHighlightTimeStamp();
     const inner = this.getWindowDimensions();
+    const cameraStyle = {
+      display: "flex",
+      fontSize: 16,
+      alignText: "left",
+      marginTop: 8,
+      backgroundColor: "white",
+      borderStyle: "solid",
+      borderColor: "gray",
+      borderWidth: 2,
+      borderRadius: 16,
+      padding: 16,
+    };
 
     return (
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
@@ -78,44 +90,27 @@ class Video extends Component {
             onProgress={this.handleProgress}
           />
         <div style={{ display: "flex", flexDirection: "column"}}>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
             <button
               class="button"
-              style={{
-                display: "flex",
-                fontSize: 16,
-                alignText: "left",
-                marginTop: 8,
-                marginLeft: 16,
-                backgroundColor: "white",
-                borderStyle: "solid",
-                borderColor: "gray",
-                borderWidth: 2,
-                borderRadius: 16,
-                padding: 16,
-              }}
+              style={cameraStyle}
+              onClick={() => this.load("videos/2.MP4", played)}
+            >
+              left
+            </button>
+            <button
+              class="button"
+              style={cameraStyle}
               onClick={() => this.load("videos/1.MP4", played)}
             >
-              camera1
+              main
             </button>
             <button
                 class="button"
-                style={{
-                  display: "flex",
-                  fontSize: 16,
-                  alignText: "left",
-                  marginTop: 8,
-                  marginLeft: 16,
-                  backgroundColor: "white",
-                  borderStyle: "solid",
-                  borderColor: "gray",
-                  borderWidth: 2,
-                  borderRadius: 16,
-                  padding: 16,
-                }}
+                style={cameraStyle}
                 onClick={() => this.load("videos/2.MP4", played)}
               >
-                camera2
+                right
               </button>
           </div>
           <div
@@ -123,11 +118,12 @@ class Video extends Component {
             display: "flex",
             flexDirection: "column",
             alignSelf: "flex-start",
-            maxHeight: 720,
+            maxHeight: 240,
             overflow: "scroll",
             margin: 16,
             width: Math.min(720, inner.Width - 32),
-            marginTop: 24,
+            marginTop: 16,
+            
           }}
         >
           
@@ -147,7 +143,7 @@ class Video extends Component {
                   borderColor: "gray",
                   borderWidth: 2,
                   borderRadius: 16,
-                  padding: 16,
+                  padding: 12,
                 }}
               >
                 {val.min} 분 {val.sec} 초: {"\r" + val.tag}
