@@ -64,10 +64,21 @@ class Video extends Component {
     const { url, played } = this.state;
     const hl = getHighlightTimeStamp();
     const inner = this.getWindowDimensions();
+    const cameraStyle = {
+      display: "flex",
+      fontSize: 16,
+      alignText: "left",
+      marginTop: 8,
+      backgroundColor: "white",
+      borderStyle: "solid",
+      borderColor: "gray",
+      borderWidth: 2,
+      borderRadius: 16,
+      padding: 16,
+    };
 
     return (
-      <div style={{ display: "flex", flexDirection: inner.width > 720 ? "row" : "column", maxHeight: 720 }}>
-        <div style={{ display: "felx", justifyContent: "flex-start" }}>
+      <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
           <ReactPlayer
             ref={this.ref}
             className="react-player fixed-bottom"
@@ -78,69 +89,44 @@ class Video extends Component {
             controls={true}
             onProgress={this.handleProgress}
           />
-          <div style={{ display: "flex", felxDirection: "row" }}>
-            <input
-              type="range"
-              min={0}
-              max={0.999999}
-              step="any"
-              value={played}
-              onMouseDown={this.handleSeekMouseDown}
-              onChange={this.handleSeekChange}
-              onMouseUp={this.handleSeekMouseUp}
-            />
+        <div style={{ display: "flex", flexDirection: "column"}}>
+          <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
             <button
               class="button"
-              style={{
-                display: "flex",
-                fontSize: 16,
-                alignText: "left",
-                marginTop: 8,
-                marginLeft: 16,
-                backgroundColor: "white",
-                borderStyle: "solid",
-                borderColor: "gray",
-                borderWidth: 2,
-                borderRadius: 16,
-                padding: 16,
-              }}
-              onClick={() => this.load("videos/1.MP4", played)}
-            >
-              camera1
-            </button>
-            <button
-              class="button"
-              style={{
-                display: "flex",
-                fontSize: 16,
-                alignText: "left",
-                marginTop: 8,
-                marginLeft: 16,
-                backgroundColor: "white",
-                borderStyle: "solid",
-                borderColor: "gray",
-                borderWidth: 2,
-                borderRadius: 16,
-                padding: 16,
-              }}
+              style={cameraStyle}
               onClick={() => this.load("videos/2.MP4", played)}
             >
-              camera2
+              left
             </button>
+            <button
+              class="button"
+              style={cameraStyle}
+              onClick={() => this.load("videos/1.MP4", played)}
+            >
+              main
+            </button>
+            <button
+                class="button"
+                style={cameraStyle}
+                onClick={() => this.load("videos/2.MP4", played)}
+              >
+                right
+              </button>
           </div>
-        </div>
-        <div
+          <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignSelf: "flex-start",
-            maxHeight: 720,
+            maxHeight: 240,
             overflow: "scroll",
             margin: 16,
             width: Math.min(720, inner.Width - 32),
-            marginTop: 24,
+            marginTop: 16,
+            
           }}
         >
+          
           {hl.map((val) => {
             console.log(val);
             return (
@@ -157,7 +143,7 @@ class Video extends Component {
                   borderColor: "gray",
                   borderWidth: 2,
                   borderRadius: 16,
-                  padding: 16,
+                  padding: 12,
                 }}
               >
                 {val.min} 분 {val.sec} 초: {"\r" + val.tag}
@@ -165,9 +151,8 @@ class Video extends Component {
             );
           })}
         </div>
-        {/* <button onClick={() => this.player.seekTo(12)}>highlight1 : 12s</button>
-        <button onClick={() => this.player.seekTo(37)}>highlight2 : 37s</button> */}
-      </div>
+          </div>
+        </div>
     );
   }
 }
