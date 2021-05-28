@@ -5,7 +5,7 @@ import { getHighlightTimeStamp } from "./210522_highlights";
 import "./index.css";
 class Video extends Component {
   state = {
-    url: "videos/210523_main.MP4",
+    //url: "videos/210523_main.MP4",
     playing: false,
     controls: true,
     volume: 0.8,
@@ -48,37 +48,34 @@ class Video extends Component {
     const { url, played } = this.state;
     const hl = getHighlightTimeStamp();
     const inner = this.getWindowDimensions();
-    const cameraStyle = {};
 
     return (
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
-        <ReactPlayer
-          ref={this.ref}
-          className="react-player fixed-bottom"
-          url={url}
-          width="100%"
-          height="100%"
-          controls={true}
-          onKeyDown={this.handleKeyPress}
-          // config={{
-          //   file: {
-          //     // attributes : { controlslist : "noremoteplayback"}
-          //   }
-          // }}
-          //onProgress={this.handleProgress}
-        />
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
+          <div class="playerContainer">
+            <ReactPlayer
+              ref={this.ref}
+              className="react-player fixed-bottom"
+              url={this.props.url}
+              width="100%"
+              height="100%"
+              controls={true}
+              onKeyDown={this.handleKeyPress}
+            />
+          </div>
+        </div>
         <div class="sideBar">
           <div class="sideBarTitle">
             <text style={{ fontSize: "32px" }}>camera</text>
           </div>
           <div class="selectButtons">
-            <button class="button" style={cameraStyle} onClick={() => this.load("videos/210523_left.MP4", played)}>
+            <button class="cameraButton" onClick={() => window.scrollTo(0, 0)}>
               left
             </button>
-            <button class="button" style={cameraStyle} onClick={() => this.load("videos/210523_main.MP4", played)}>
+            <button class="cameraButton" onClick={() => window.scrollTo(0, inner.height)}>
               main
             </button>
-            <button class="button" style={cameraStyle} onClick={() => this.load("videos/210523_right.MP4", played)}>
+            <button class="cameraButton" onClick={() => window.scrollTo(0, inner.height * 2)}>
               right
             </button>
           </div>
@@ -118,4 +115,11 @@ class Video extends Component {
   }
 }
 
-ReactDOM.render(<Video />, document.getElementById("root"));
+ReactDOM.render(
+  <>
+    <Video url="videos/210523_left.MP4" />
+    <Video url="videos/210523_left.MP4" />
+    <Video url="videos/210523_left.MP4" />
+  </>,
+  document.getElementById("root")
+);
