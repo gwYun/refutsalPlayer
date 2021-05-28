@@ -4,7 +4,7 @@ import ReactPlayer from "react-player";
 import { getHighlightTimeStamp } from "./210522_highlights";
 class Video extends Component {
   state = {
-    url: "videos/210523_main.MP4",
+    //url: "videos/210523_main.MP4",
     playing: false,
     controls: true,
     volume: 0.8,
@@ -21,7 +21,7 @@ class Video extends Component {
   };
 
   ref = (player) => {
-    this.player = player;
+    this.player = player
   };
 
   handleKeyPress = (event) => {
@@ -62,41 +62,61 @@ class Video extends Component {
 
     return (
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
+          <div style={{marginBottom: "700px"}}>
           <ReactPlayer
             ref={this.ref}
             className="react-player fixed-bottom"
-            url={url}
+            url="videos/210523_left.MP4"
             width="100%"
             height="100%"
             controls={true}
             onKeyDown={this.handleKeyPress}
-            // config={{
-            //   file: {
-            //     // attributes : { controlslist : "noremoteplayback"}
-            //   }
-            // }}
-            //onProgress={this.handleProgress}
           />
+          </div>
+          <div style={{marginBottom: "700px"}}>
+          <ReactPlayer
+            ref={this.ref}
+            className="react-player fixed-bottom"
+            url="videos/210523_main.MP4"
+            width="100%"
+            height="100%"
+            controls={true}
+            onKeyDown={this.handleKeyPress}
+          />
+          </div>
+          <div style={{marginBottom: "700px"}}>
+          <ReactPlayer
+            ref={this.ref}
+            className="react-player fixed-bottom"
+            url="videos/210523_right.MP4"
+            width="100%"
+            height="100%"
+            controls={true}
+            onKeyDown={this.handleKeyPress}
+          />
+          </div>
+        </div>
         <div style={{ display: "flex", flexDirection: "column"}}>
           <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
             <button
               class="button"
               style={cameraStyle}
-              onClick={() => this.load("videos/210523_left.MP4", played)}
+              onClick={() => window.scrollTo(0, 0)}
             >
               left
             </button>
             <button
               class="button"
               style={cameraStyle}
-              onClick={() => this.load("videos/210523_main.MP4", played)}
+              onClick={() => window.scrollTo(0, 1250)}
             >
               main
             </button>
             <button
                 class="button"
                 style={cameraStyle}
-                onClick={() => this.load("videos/210523_right.MP4", played)}
+                onClick={() => window.scrollTo(0, 2500)}
               >
                 right
               </button>
