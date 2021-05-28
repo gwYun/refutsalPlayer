@@ -1,6 +1,12 @@
-.sidebar {
+.playerContainer {
+  /* margin-bottom: 700px; */
+  width: 80vw;
+  height: 100vh;
+}
+
+.onePlayer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .selectButtons {
@@ -21,16 +27,6 @@
   justify-content: center;
 }
 
-.tags {
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-  max-height: 90vh;
-  overflow: scroll;
-  margin: 16px;
-  margin-top: 16px;
-}
-
 .cameraButton {
   display: flex;
   font-size: 16;
@@ -40,6 +36,15 @@
   border-style: solid;
   border-color: gray;
   border-width: 2;
-  border-radius: 16;
   padding: 16;
+}
+
+.tags {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  max-height: 90vh;
+  overflow: scroll;
+  margin: 16px;
+  margin-top: 16px;
 }
