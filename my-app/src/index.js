@@ -2,54 +2,37 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ReactPlayer from "react-player";
 import { getHighlightTimeStamp } from "./210522_highlights";
-
 class Video extends Component {
   state = {
-    url: "videos/1.MP4",
-    pip: false,
-    playing: true,
-    controls: false,
-    light: false,
+    url: "videos/210523_main.MP4",
+    playing: false,
+    controls: true,
     volume: 0.8,
-    muted: false,
-    played: 0,
-    loaded: 0,
-    duration: 0,
-    playbackRate: 1.0,
-    loop: false,
   };
-  load = (url, played) => {
+
+  load = (url) => {
     console.log(url);
     this.setState({
       url: url,
       // lastTime: played,
-      played: played,
       //loaded: 0,
       //pip: false
     });
   };
-  handleProgress = (state) => {
-    console.log("onProgress", state);
-    // We only want to update time slider if we are not currently seeking
-    if (!this.state.seeking) {
-      this.setState(state);
-    }
-  };
-  handleSeekMouseDown = (e) => {
-    console.log("down");
-    this.setState({ seeking: true });
-  };
-  handleSeekChange = (e) => {
-    console.log("change");
-    this.setState({ played: parseFloat(e.target.value) });
-  };
-  handleSeekMouseUp = (e) => {
-    console.log("up");
-    this.setState({ seeking: false });
-    this.player.seekTo(parseFloat(e.target.value));
-  };
+
   ref = (player) => {
     this.player = player;
+  };
+
+  handleKeyPress = (event) => {
+    console.log(event);
+    if (event.which === 39) {
+      event.preventDefault();
+      this.player.seekTo(this.player.getCurrentTime() - this.player.getDuration() * 0.01 + 3);
+    } else if (event.which === 37) {
+      event.preventDefault();
+      this.player.seekTo(this.player.getCurrentTime() + this.player.getDuration() * 0.01 - 3);
+    }
   };
 
   getWindowDimensions() {
@@ -83,32 +66,37 @@ class Video extends Component {
             ref={this.ref}
             className="react-player fixed-bottom"
             url={url}
-            played={played}
             width="100%"
             height="100%"
             controls={true}
-            onProgress={this.handleProgress}
+            onKeyDown={this.handleKeyPress}
+            // config={{
+            //   file: {
+            //     // attributes : { controlslist : "noremoteplayback"}
+            //   }
+            // }}
+            //onProgress={this.handleProgress}
           />
         <div style={{ display: "flex", flexDirection: "column"}}>
           <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
             <button
               class="button"
               style={cameraStyle}
-              onClick={() => this.load("videos/2.MP4", played)}
+              onClick={() => this.load("videos/210523_left.MP4", played)}
             >
               left
             </button>
             <button
               class="button"
               style={cameraStyle}
-              onClick={() => this.load("videos/1.MP4", played)}
+              onClick={() => this.load("videos/210523_main.MP4", played)}
             >
               main
             </button>
             <button
                 class="button"
                 style={cameraStyle}
-                onClick={() => this.load("videos/2.MP4", played)}
+                onClick={() => this.load("videos/210523_right.MP4", played)}
               >
                 right
               </button>
