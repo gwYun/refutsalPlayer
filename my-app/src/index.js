@@ -6,23 +6,14 @@ import "./index.css";
 class Video extends Component {
   state = {
     //url: "videos/210523_main.MP4",
-    playing: false,
-    controls: true,
+    playing : true,
+    state : false,
+    controls: false,
     volume: 0.8,
   };
 
-  load = (url) => {
-    console.log(url);
-    this.setState({
-      url: url,
-      // lastTime: played,
-      //loaded: 0,
-      //pip: false
-    });
-  };
-
   ref = (player) => {
-    this.player = player;
+    this.player = player
   };
 
   handleKeyPress = (event) => {
@@ -36,6 +27,46 @@ class Video extends Component {
     }
   };
 
+  handleLeftButtonPress = (camera) => {
+    window.scrollTo(0, 0)
+    this.setState({ playing : false })
+    if (camera === "leftCamera") {
+      console.log("LEFT")
+    }
+    else if (camera === "mainCamera") {
+      console.log("MAIN")
+    }
+    else if (camera === "rightCamera") {
+      console.log("RIGHT")
+    }
+  }
+  handleMainButtonPress = (camera) => {
+    window.scrollTo(0, this.getWindowDimensions().height)
+    this.setState({ playing : false })
+    if (camera === "leftCamera") {
+      console.log("LEFT")
+    }
+    else if (camera === "mainCamera") {
+      console.log("MAIN")
+    }
+    else if (camera === "rightCamera") {
+      console.log("RIGHT")
+    }
+  }
+  handleRightButtonPress = (camera) => {
+    window.scrollTo(0, this.getWindowDimensions().height * 2)
+    this.setState({ playing : false })
+    if (camera === "leftCamera") {
+      console.log("LEFT")
+    }
+    else if (camera === "mainCamera") {
+      console.log("MAIN")
+    }
+    else if (camera === "rightCamera") {
+      console.log("RIGHT")
+    }
+  }
+
   getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
     return {
@@ -45,9 +76,9 @@ class Video extends Component {
   }
 
   render() {
-    const { url, played } = this.state;
-    const hl = getHighlightTimeStamp();
-    const inner = this.getWindowDimensions();
+    const { playing } = this.state
+    const hl = getHighlightTimeStamp()
+    const inner = this.getWindowDimensions()
 
     return (
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
@@ -60,6 +91,7 @@ class Video extends Component {
               width="100%"
               height="100%"
               controls={true}
+              playing={playing}
               onKeyDown={this.handleKeyPress}
             />
           </div>
@@ -69,13 +101,13 @@ class Video extends Component {
             <text style={{ fontSize: "32px" }}>camera</text>
           </div>
           <div class="selectButtons">
-            <button class="cameraButton" onClick={() => window.scrollTo(0, 0)}>
+            <button class="cameraButton" onClick={() => this.handleLeftButtonPress(this.props.playerName)}>
               left
             </button>
-            <button class="cameraButton" onClick={() => window.scrollTo(0, inner.height)}>
+            <button class="cameraButton" onClick={() => this.handleMainButtonPress(this.props.playerName)}>
               main
             </button>
-            <button class="cameraButton" onClick={() => window.scrollTo(0, inner.height * 2)}>
+            <button class="cameraButton" onClick={() => this.handleRightButtonPress(this.props.playerName)}>
               right
             </button>
           </div>
@@ -86,7 +118,7 @@ class Video extends Component {
             }}
           >
             {hl.map((val) => {
-              console.log(val);
+              //console.log(val);
               return (
                 <button
                   class="button"
@@ -117,9 +149,9 @@ class Video extends Component {
 
 ReactDOM.render(
   <>
-    <Video url="videos/210523_left.MP4" />
-    <Video url="videos/210523_left.MP4" />
-    <Video url="videos/210523_left.MP4" />
+    <Video url="videos/210523_left.MP4" playerName="leftCamera" />
+    <Video url="videos/210523_main.MP4" playerName="mainCamera" />
+    <Video url="videos/210523_right.MP4" playerName="rightCamera" />
   </>,
   document.getElementById("root")
 );
