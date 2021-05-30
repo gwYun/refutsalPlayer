@@ -1,7 +1,7 @@
 .playerContainer {
   /* margin-bottom: 700px; */
   width: 80vw;
-  height: 100vh;
+  height: 97vh;
 }
 
 .onePlayer {
@@ -18,7 +18,12 @@
 .sideBar {
   display: flex;
   flex-direction: column;
-  width: 100;
+  width: 15vw;
+  margin-left: 16;
+}
+
+.sideBarTop {
+  background-color: chartreuse;
 }
 
 .sideBarTitle {
