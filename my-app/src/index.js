@@ -74,6 +74,15 @@ class Video extends Component {
     const hl = getHighlightTimeStamp();
     const inner = this.getWindowDimensions();
 
+    const getTitleAlign = (title) => {
+      let alignment;
+      console.log(title[0]);
+      if (title[0] === "검") alignment = "flex-start";
+      else if (title[0] === "조") alignment = "flex-end";
+      else alignment = "center";
+      return alignment;
+    };
+
     return (
       <div
         style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", height: "100vh", width: "100vw" }}
@@ -108,46 +117,41 @@ class Video extends Component {
           </div>
         </div>
         <div class="sideBar">
-          <div class="sideBarTitle">
-            <text style={{ fontSize: "32px" }}>camera</text>
-          </div>
-          <div class="selectButtons">
-            <button class="cameraButton" onClick={() => this.handleLeftButtonPress(this.props.playerName)}>
-              left
-            </button>
-            <button class="cameraButton" onClick={() => this.handleMainButtonPress(this.props.playerName)}>
-              main
-            </button>
-            {/* <button class="cameraButton" onClick={() => this.handleRightButtonPress(this.props.playerName)}>
+          <div class="sideBarTop">
+            <div class="sideBarTitle">camera</div>
+            <div class="cameraButtons">
+              <button class="cameraButton" onClick={() => this.handleLeftButtonPress(this.props.playerName)}>
+                left
+              </button>
+              <div style={{ backgroundColor: "white", height: 24, width: 2 }} />
+              <button class="cameraButton" onClick={() => this.handleMainButtonPress(this.props.playerName)}>
+                main
+              </button>
+              {/* <button class="cameraButton" onClick={() => this.handleRightButtonPress(this.props.playerName)}>
               right
             </button> */}
+            </div>
           </div>
-          <div
-            class="tags"
-            style={{
-              width: Math.min(720, inner.Width - 32),
-            }}
-          >
-            {hl.map((val) => {
+          <div class="tags">
+            {hl.map((val, index) => {
               //console.log(val);
               return (
                 <button
-                  class="button"
+                  class="oneTag"
+                  style={{ backgroundColor: index % 2 === 0 ? "white" : "#eee" }}
                   onClick={() => this.player.seekTo(val.min * 60 + val.sec)}
-                  style={{
-                    display: "flex",
-                    fontSize: 16,
-                    alignText: "left",
-                    marginTop: 8,
-                    backgroundColor: "white",
-                    borderStyle: "solid",
-                    borderColor: "gray",
-                    borderWidth: 2,
-                    borderRadius: 16,
-                    padding: 12,
-                  }}
                 >
-                  {val.min} 분 {val.sec} 초: {"\r" + val.tag}
+                  <div
+                    class="tagTitle"
+                    style={{
+                      justifyContent: getTitleAlign(val.tag),
+                    }}
+                  >
+                    <div>{"\r" + val.tag}</div>
+                  </div>
+                  <div class="tagTime">
+                    {val.min} : {val.sec < 10 ? "0" + val.sec : val.sec}
+                  </div>
                 </button>
               );
             })}
