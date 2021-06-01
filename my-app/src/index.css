@@ -13,10 +13,14 @@
   display: flex;
   flex-direction: column;
   width: 29vw;
+  height: 100vh;
   margin-left: 0.2vw;
 }
 
 .sideBarTop {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   /* background-color: #93f669; */
   background-color: #55c325;
   padding: 0.4vw;
@@ -25,10 +29,13 @@
 .sideBarTitle {
   color: white;
   display: flex;
-  align-items: center;
+  align-self: center;
   justify-content: center;
-  font-size: 1.2vw;
-  font-weight: 700;
+  font-size: 3vw;
+  background-color: #55c325;
+  border-width: 0px;
+  margin: 1vw;
+  /* font-weight: 700; */
 }
 
 .cameraButtons {
@@ -42,7 +49,8 @@
 
 .cameraButton {
   display: flex;
-  font-size: 1vw;
+  font-size: 1.5vw;
+  font-weight: 700;
   text-align: left;
   margin-top: 8;
   background-color: #55c325;
@@ -57,7 +65,7 @@
 .tags {
   display: flex;
   flex-direction: column;
-  height: 85vh;
+  height: 74vh;
   overflow: scroll;
 }
 
@@ -67,22 +75,24 @@
   background-color: white;
   border-width: 0;
   border-radius: 16;
-  padding: 0.4vw;
-  padding-inline: 0.8vw;
+  padding: 0.8vw;
+  padding-inline: 1.2vw;
+  padding-right: 2vw;
 }
 
 .tagTitle {
-  font-size: 1vw;
+  font-size: 2vw;
   display: flex;
   flex: 1;
   margin-right: 0.4vw;
+  text-align: justify;
 }
 
 .tagTime {
   align-self: center;
   color: #aaa;
-  font-size: 0.8vw;
+  font-size: 1.2vw;
   font-weight: 600;
-  width: 3vw;
+  width: 5vw;
   text-align: right;
 }

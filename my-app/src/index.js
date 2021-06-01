@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ReactPlayer from "react-player";
 
-import { getHighlightTimeStamp } from "./210522_highlights";
+import { getHighlightTimeStamp } from "./210530_highlights";
 import "./index.css";
 
-window.addEventListener('scroll', function() {
-  console.log(window.pageYOffset + 'px')
+window.addEventListener("scroll", function () {
+  console.log(window.pageYOffset + "px");
   //console.log(window.innerHeight  + 'px')
   if (window.pageYOffset < window.innerHeight * 0.7) window.scrollTo(0, 0);
   else if (window.pageYOffset < window.innerHeight * 1.4) window.scrollTo(0, window.innerHeight);
@@ -96,7 +96,7 @@ class Video extends Component {
     return (
       <div
         style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", height: "100vh", width: "100vw" }}
-        class = "body"
+        class="body"
       >
         <div
           style={{
@@ -122,7 +122,7 @@ class Video extends Component {
         </div>
         <div class="sideBar">
           <div class="sideBarTop">
-            <div class="sideBarTitle">camera</div>
+            <button class="sideBarTitle">camera</button>
             <div class="cameraButtons">
               <button class="cameraButton" onClick={() => this.handleLeftButtonPress(this.props.playerName)}>
                 left
@@ -167,11 +167,13 @@ class Video extends Component {
 }
 
 ReactDOM.render(
-  <div style = {{
-    overflow : "hidden"
-  }}>
-    <Video url="videos/210523_left.MP4" playerName="leftCamera" />
-    <Video url="videos/210523_main.MP4" playerName="mainCamera" />
+  <div
+    style={{
+      overflow: "hidden",
+    }}
+  >
+    <Video url="videos/210530_left.MP4" playerName="leftCamera" />
+    <Video url="videos/210530_main.MP4" playerName="mainCamera" />
     {/* <Video url="videos/210523_right.MP4" playerName="rightCamera" /> */}
   </div>,
   document.getElementById("root")
