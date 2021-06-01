@@ -1,6 +1,6 @@
 .playerContainer {
   /* margin-bottom: 700px; */
-  width: 80vw;
+  width: 70vw;
   height: 97vh;
 }
 
@@ -12,7 +12,7 @@
 .sideBar {
   display: flex;
   flex-direction: column;
-  width: 19vw;
+  width: 29vw;
   margin-left: 5px;
 }
 
@@ -27,7 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 1.2vw;
   font-weight: 700;
 }
 
@@ -41,7 +41,7 @@
 
 .cameraButton {
   display: flex;
-  font-size: 24px;
+  font-size: 1vw;
   text-align: left;
   margin-top: 8;
   background-color: #55c325;
@@ -69,7 +69,7 @@
 }
 
 .tagTitle {
-  font-size: 20px;
+  font-size: 1vw;
   display: flex;
   flex: 1;
   margin-right: 10px;
@@ -78,7 +78,7 @@
 .tagTime {
   align-self: center;
   color: #aaa;
-  font-size: 16px;
+  font-size: 0.8vw;
   font-weight: 600;
   width: 60px;
   text-align: right;
