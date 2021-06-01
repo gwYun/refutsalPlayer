@@ -6,14 +6,14 @@ import "./index.css";
 class Video extends Component {
   state = {
     //url: "videos/210523_main.MP4",
-    playing : true,
-    state : false,
+    playing: true,
+    state: false,
     controls: false,
     volume: 0.8,
   };
 
   ref = (player) => {
-    this.player = player
+    this.player = player;
   };
 
   handleKeyPress = (event) => {
@@ -28,44 +28,38 @@ class Video extends Component {
   };
 
   handleLeftButtonPress = (camera) => {
-    window.scrollTo(0, 0)
-    this.setState({ playing : false })
+    window.scrollTo(0, 0);
+    this.setState({ playing: false });
     if (camera === "leftCamera") {
-      console.log("LEFT")
+      console.log("LEFT");
+    } else if (camera === "mainCamera") {
+      console.log("MAIN");
+    } else if (camera === "rightCamera") {
+      console.log("RIGHT");
     }
-    else if (camera === "mainCamera") {
-      console.log("MAIN")
-    }
-    else if (camera === "rightCamera") {
-      console.log("RIGHT")
-    }
-  }
+  };
   handleMainButtonPress = (camera) => {
-    window.scrollTo(0, this.getWindowDimensions().height)
-    this.setState({ playing : false })
+    window.scrollTo(0, this.getWindowDimensions().height);
+    this.setState({ playing: false });
     if (camera === "leftCamera") {
-      console.log("LEFT")
+      console.log("LEFT");
+    } else if (camera === "mainCamera") {
+      console.log("MAIN");
+    } else if (camera === "rightCamera") {
+      console.log("RIGHT");
     }
-    else if (camera === "mainCamera") {
-      console.log("MAIN")
-    }
-    else if (camera === "rightCamera") {
-      console.log("RIGHT")
-    }
-  }
+  };
   handleRightButtonPress = (camera) => {
-    window.scrollTo(0, this.getWindowDimensions().height * 2)
-    this.setState({ playing : false })
+    window.scrollTo(0, this.getWindowDimensions().height * 2);
+    this.setState({ playing: false });
     if (camera === "leftCamera") {
-      console.log("LEFT")
+      console.log("LEFT");
+    } else if (camera === "mainCamera") {
+      console.log("MAIN");
+    } else if (camera === "rightCamera") {
+      console.log("RIGHT");
     }
-    else if (camera === "mainCamera") {
-      console.log("MAIN")
-    }
-    else if (camera === "rightCamera") {
-      console.log("RIGHT")
-    }
-  }
+  };
 
   getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -76,13 +70,23 @@ class Video extends Component {
   }
 
   render() {
-    const { playing } = this.state
-    const hl = getHighlightTimeStamp()
-    const inner = this.getWindowDimensions()
+    const { playing } = this.state;
+    const hl = getHighlightTimeStamp();
+    const inner = this.getWindowDimensions();
 
     return (
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
+      <div
+        style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", height: "100vh", width: "100vw" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            height: "97vh",
+            marginBottom: "3vh",
+          }}
+        >
           <div class="playerContainer">
             <ReactPlayer
               ref={this.ref}
