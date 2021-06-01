@@ -87,7 +87,7 @@ class Video extends Component {
     const getTitleAlign = (title) => {
       let alignment;
       console.log(title[0]);
-      if (title[0] === "검") alignment = "flex-start";
+      if (title[0] === "흰") alignment = "flex-start";
       else if (title[0] === "조") alignment = "flex-end";
       else alignment = "center";
       return alignment;
