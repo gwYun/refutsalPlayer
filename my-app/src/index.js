@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ReactPlayer from "react-player";
-
 import { getHighlightTimeStamp } from "./210606_highlights";
 import "./index.css";
 
@@ -108,16 +107,23 @@ class Video extends Component {
           }}
         >
           <div class="playerContainer">
-            <ReactPlayer
-              ref={this.ref}
-              className="react-player fixed-bottom"
-              url={this.props.url}
-              width="100%"
-              height="100%"
-              controls={true}
-              playing={playing}
-              onKeyDown={this.handleKeyPress}
-            />
+            {!this.props.isWIP && (
+              <ReactPlayer
+                ref={this.ref}
+                className="react-player fixed-bottom"
+                url={this.props.url}
+                width="100%"
+                height="100%"
+                controls={true}
+                playing={playing}
+                onKeyDown={this.handleKeyPress}
+              />
+            )}
+            {this.props.isWIP && (
+              <text style={{ backgroundColor: "white", textSize: "32px", alignSelf: "center" }}>
+                영상 처리 중입니다.
+              </text>
+            )}
           </div>
         </div>
         <div class="sideBar">
@@ -168,9 +174,10 @@ class Video extends Component {
 
 ReactDOM.render(
   <>
-    <Video url="videos/20210606_left.MP4" playerName="leftCamera" isWIP={false} />
-    {/* <Video url="videos/20210606_main.MP4" playerName="mainCamera" isWIP={false} /> */}
-    <Video url="videos/20210606_right.MP4" playerName="rightCamera" />
+
+    <Video url="videos/210530_left.MP4" playerName="leftCamera" isWIP={false} />
+    <Video url="videos/210530_main.MP4" playerName="mainCamera" isWIP={false} />
+    {/* <Video url="videos/210523_right.MP4" playerName="rightCamera" /> */}
   </>,
   document.getElementById("root")
 );
