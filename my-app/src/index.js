@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ReactPlayer from "react-player";
 
-import { getHighlightTimeStamp } from "./210530_highlights";
+import { getHighlightTimeStamp } from "./210606_highlights";
 import "./index.css";
 
 window.addEventListener("scroll", function () {
@@ -87,7 +87,7 @@ class Video extends Component {
     const getTitleAlign = (title) => {
       let alignment;
       console.log(title[0]);
-      if (title[0] === "흰") alignment = "flex-start";
+      if (title[0] === "일") alignment = "flex-start";
       else if (title[0] === "조") alignment = "flex-end";
       else alignment = "center";
       return alignment;
@@ -128,12 +128,12 @@ class Video extends Component {
                 left
               </button>
               <div style={{ backgroundColor: "white", height: 24, width: 2 }} />
-              <button class="cameraButton" onClick={() => this.handleMainButtonPress(this.props.playerName)}>
+              {/* <button class="cameraButton" onClick={() => this.handleMainButtonPress(this.props.playerName)}>
                 main
+              </button> */}
+              <button class="cameraButton" onClick={() => this.handleRightButtonPress(this.props.playerName)}>
+                right
               </button>
-              {/* <button class="cameraButton" onClick={() => this.handleRightButtonPress(this.props.playerName)}>
-              right
-            </button> */}
             </div>
           </div>
           <div class="tags">
@@ -143,7 +143,7 @@ class Video extends Component {
                 <button
                   class="oneTag"
                   style={{ backgroundColor: index % 2 === 0 ? "white" : "#eee" }}
-                  onClick={() => this.player.seekTo(val.min * 60 + val.sec)}
+                  onClick={() => this.player.seekTo(val.min * 60 + val.sec - 5)}
                 >
                   <div
                     class="tagTitle"
@@ -167,14 +167,10 @@ class Video extends Component {
 }
 
 ReactDOM.render(
-  <div
-    style={{
-      overflow: "hidden",
-    }}
-  >
-    <Video url="videos/210530_left.MP4" playerName="leftCamera" />
-    <Video url="videos/210530_main.MP4" playerName="mainCamera" />
-    {/* <Video url="videos/210523_right.MP4" playerName="rightCamera" /> */}
-  </div>,
+  <>
+    <Video url="videos/20210606_left.MP4" playerName="leftCamera" isWIP={false} />
+    {/* <Video url="videos/20210606_main.MP4" playerName="mainCamera" isWIP={false} /> */}
+    <Video url="videos/20210606_right.MP4" playerName="rightCamera" />
+  </>,
   document.getElementById("root")
 );
