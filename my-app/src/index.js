@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ReactPlayer from "react-player";
 import { getHighlightTimeStamp } from "./210606_highlights";
+import { BrowserRouter as Router, Route, Link, Switch, useParams } from "react-router-dom";
 import "./index.css";
 
 window.addEventListener("scroll", function () {
@@ -14,15 +15,39 @@ window.addEventListener("scroll", function () {
 
 class Video extends Component {
   state = {
-    //url: "videos/210523_main.MP4",
+    url: this.props.url,
     playing: true,
     state: false,
     controls: false,
     volume: 0.8,
+    played: 0,
+    duration: 0,
+  };
+
+  load = (url) => {
+    this.setState({
+      url,
+      played: this.state.played,
+      // loaded: 0,
+      pip: false,
+    });
   };
 
   ref = (player) => {
     this.player = player;
+  };
+
+  handleSeekChange = (e) => {
+    this.setState({ played: parseFloat(e.target.value) });
+    console.log(this.state.played);
+  };
+
+  handleProgress = (state) => {
+    console.log("onProgress", state);
+    // We only want to update time slider if we are not currently seeking
+    if (!this.state.seeking) {
+      this.setState(state);
+    }
   };
 
   handleKeyPress = (event) => {
@@ -37,37 +62,30 @@ class Video extends Component {
   };
 
   handleLeftButtonPress = (camera) => {
+    console.log(this.state.played);
     window.scrollTo(0, 0);
-    this.setState({ playing: false });
-    if (camera === "leftCamera") {
-      console.log("LEFT");
-    } else if (camera === "mainCamera") {
-      console.log("MAIN");
-    } else if (camera === "rightCamera") {
-      console.log("RIGHT");
-    }
+    let newUrl = "videos/210530_left.MP4#t=" + this.player.getCurrentTime();
+    console.log(newUrl);
+    this.load(newUrl);
   };
+
   handleMainButtonPress = (camera) => {
-    window.scrollTo(0, this.getWindowDimensions().height);
-    this.setState({ playing: false });
-    if (camera === "leftCamera") {
-      console.log("LEFT");
-    } else if (camera === "mainCamera") {
-      console.log("MAIN");
-    } else if (camera === "rightCamera") {
-      console.log("RIGHT");
-    }
+    console.log(this.state.played);
+    let newUrl = "videos/210530_main.MP4#t=" + this.player.getCurrentTime();
+    console.log(newUrl);
+    this.load(newUrl);
   };
+
   handleRightButtonPress = (camera) => {
-    window.scrollTo(0, this.getWindowDimensions().height * 2);
-    this.setState({ playing: false });
-    if (camera === "leftCamera") {
-      console.log("LEFT");
-    } else if (camera === "mainCamera") {
-      console.log("MAIN");
-    } else if (camera === "rightCamera") {
-      console.log("RIGHT");
-    }
+    console.log(this.state.played);
+    let newUrl = "videos/210530_right.MP4#t=" + this.player.getCurrentTime();
+    console.log(newUrl);
+    this.load(newUrl);
+  };
+
+  handleDuration = (duration) => {
+    console.log("onDuration", duration);
+    this.setState({ duration });
   };
 
   getWindowDimensions() {
@@ -79,22 +97,45 @@ class Video extends Component {
   }
 
   render() {
-    const { playing } = this.state;
+    const { playing, played, duration } = this.state;
     const hl = getHighlightTimeStamp();
     const inner = this.getWindowDimensions();
 
     const getTitleAlign = (title) => {
       let alignment;
-      console.log(title[0]);
+      // console.log(title[0]);
       if (title[0] === "일") alignment = "flex-start";
       else if (title[0] === "조") alignment = "flex-end";
       else alignment = "center";
       return alignment;
     };
 
+    const ReactPlayerUrl = () => {
+      let { timeStamp } = useParams();
+      console.log(timeStamp);
+      const newUrl = this.state.url + "#t=" + timeStamp;
+      console.log(newUrl);
+      this.setState({ url: newUrl, played: timeStamp });
+      return (
+        <ReactPlayer
+          ref={this.ref}
+          className="react-player fixed-bottom"
+          url={newUrl}
+          width="100%"
+          height="100%"
+          controls={true}
+          playing={playing}
+          played={played}
+          onKeyDown={this.handleKeyPress}
+          onProgress={this.handleProgress}
+          onDuration={this.handleDuration}
+        />
+      );
+    };
+
     return (
       <div
-        style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", height: "100vh", width: "100vw" }}
+        style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", height: "98vh", width: "100vw" }}
         class="body"
       >
         <div
@@ -103,27 +144,62 @@ class Video extends Component {
             flexDirection: "column",
             justifyContent: "flex-start",
             height: "97vh",
-            marginBottom: "3vh",
+            // marginBottom: "3vh",
           }}
         >
           <div class="playerContainer">
-            {!this.props.isWIP && (
-              <ReactPlayer
-                ref={this.ref}
-                className="react-player fixed-bottom"
-                url={this.props.url}
-                width="100%"
-                height="100%"
-                controls={true}
-                playing={playing}
-                onKeyDown={this.handleKeyPress}
-              />
-            )}
-            {this.props.isWIP && (
-              <text style={{ backgroundColor: "white", textSize: "32px", alignSelf: "center" }}>
-                영상 처리 중입니다.
-              </text>
-            )}
+            <Router>
+              <ul>
+                <li>
+                  <Link to="/home">Home</Link>
+                </li>
+                <li>
+                  <Link to="/t/3">time</Link>
+                </li>
+                <li>
+                  <Link to="/users">users</Link>
+                </li>
+              </ul>
+              <Switch>
+                <Route path="/home">
+                  <ReactPlayer
+                    ref={this.ref}
+                    className="react-player fixed-bottom"
+                    url={this.state.url}
+                    width="100%"
+                    height="100%"
+                    controls={true}
+                    playing={playing}
+                    played={played}
+                    onKeyDown={this.handleKeyPress}
+                    onProgress={this.handleProgress}
+                    onDuration={this.handleDuration}
+                  />
+                </Route>
+                {/* <Route path="/t/:timeStamp" children={<ReactPlayerUrl />} /> */}
+                {/* <ReactPlayer
+                  ref={this.ref}
+                  className="react-player fixed-bottom"
+                  url={this.state.url + "#t=32"}
+                  width="100%"
+                  height="100%"
+                  controls={true}
+                  playing={playing}
+                  played={played}
+                  onKeyDown={this.handleKeyPress}
+                  onProgress={this.handleProgress}
+                  onDuration={this.handleDuration}
+                /> */}
+                {/* </Route> */}
+                {/* <Route
+                path="/t/:timeStamp"
+                render={({ match }) => <ReactPlayerUrl timeStamp={match.params.timeStamp} />}
+              /> */}
+                {/* <Route path="/users">
+                  <div>something</div>
+                </Route> */}
+              </Switch>
+            </Router>
           </div>
         </div>
         <div class="sideBar">
@@ -133,13 +209,14 @@ class Video extends Component {
               <button class="cameraButton" onClick={() => this.handleLeftButtonPress(this.props.playerName)}>
                 left
               </button>
-              <div style={{ backgroundColor: "white", height: 24, width: 2 }} />
-              {/* <button class="cameraButton" onClick={() => this.handleMainButtonPress(this.props.playerName)}>
+              {/* <div style={{ backgroundColor: "white", height: "5vh", width: "0.2vw" }} /> */}
+              <button class="cameraButton" onClick={() => this.handleMainButtonPress(this.props.playerName)}>
                 main
-              </button> */}
+              </button>
+              {/* <div style={{ backgroundColor: "white", height: 24, width: 2 }} />
               <button class="cameraButton" onClick={() => this.handleRightButtonPress(this.props.playerName)}>
                 right
-              </button>
+              </button> */}
             </div>
           </div>
           <div class="tags">
@@ -173,11 +250,8 @@ class Video extends Component {
 }
 
 ReactDOM.render(
-  <>
-
+  <div style={{ overflow: "hidden" }}>
     <Video url="videos/210530_left.MP4" playerName="leftCamera" isWIP={false} />
-    <Video url="videos/210530_main.MP4" playerName="mainCamera" isWIP={false} />
-    {/* <Video url="videos/210523_right.MP4" playerName="rightCamera" /> */}
-  </>,
+  </div>,
   document.getElementById("root")
 );
