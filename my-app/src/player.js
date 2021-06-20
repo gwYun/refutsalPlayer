@@ -4,7 +4,7 @@ import { getHighlightTimeStamp } from "./210606_highlights";
 import { BrowserRouter as Router, Route, Link, Switch, useParams } from "react-router-dom";
 import "./index.css";
 
-export class Video extends Component {
+export default class Video extends Component {
   state = {
     url: this.props.url,
     playing: true,
@@ -108,19 +108,21 @@ export class Video extends Component {
       console.log(newUrl);
       this.setState({ url: newUrl, played: timeStamp });
       return (
-        <ReactPlayer
-          ref={this.ref}
-          className="react-player fixed-bottom"
-          url={newUrl}
-          width="100%"
-          height="100%"
-          controls={true}
-          playing={playing}
-          played={played}
-          onKeyDown={this.handleKeyPress}
-          onProgress={this.handleProgress}
-          onDuration={this.handleDuration}
-        />
+        <div>
+          <ReactPlayer
+            ref={this.ref}
+            className="react-player fixed-bottom"
+            url={newUrl}
+            width="100%"
+            height="100%"
+            controls={true}
+            playing={playing}
+            played={played}
+            onKeyDown={this.handleKeyPress}
+            onProgress={this.handleProgress}
+            onDuration={this.handleDuration}
+          />
+        </div>
       );
     };
 
@@ -139,36 +141,20 @@ export class Video extends Component {
           }}
         >
           <div class="playerContainer">
-            <Router>
-              <ul>
-                <li>
-                  <Link to="/home">Home</Link>
-                </li>
-                <li>
-                  <Link to="/t/3">time</Link>
-                </li>
-                <li>
-                  <Link to="/users">users</Link>
-                </li>
-              </ul>
-              <Switch>
-                <Route path="/home">
-                  <ReactPlayer
-                    ref={this.ref}
-                    className="react-player fixed-bottom"
-                    url={this.state.url}
-                    width="100%"
-                    height="100%"
-                    controls={true}
-                    playing={playing}
-                    played={played}
-                    onKeyDown={this.handleKeyPress}
-                    onProgress={this.handleProgress}
-                    onDuration={this.handleDuration}
-                  />
-                </Route>
-                {/* <Route path="/t/:timeStamp" children={<ReactPlayerUrl />} /> */}
-                {/* <ReactPlayer
+            <ReactPlayer
+              ref={this.ref}
+              className="react-player fixed-bottom"
+              url={this.state.url}
+              width="100%"
+              height="100%"
+              controls={true}
+              playing={playing}
+              played={played}
+              onKeyDown={this.handleKeyPress}
+              onProgress={this.handleProgress}
+              onDuration={this.handleDuration}
+            />
+            {/* <ReactPlayer
                     ref={this.ref}
                     className="react-player fixed-bottom"
                     url={this.state.url + "#t=32"}
@@ -181,16 +167,14 @@ export class Video extends Component {
                     onProgress={this.handleProgress}
                     onDuration={this.handleDuration}
                   /> */}
-                {/* </Route> */}
-                {/* <Route
+            {/* </Route> */}
+            {/* <Route
                   path="/t/:timeStamp"
                   render={({ match }) => <ReactPlayerUrl timeStamp={match.params.timeStamp} />}
                 /> */}
-                {/* <Route path="/users">
+            {/* <Route path="/users">
                     <div>something</div>
                   </Route> */}
-              </Switch>
-            </Router>
           </div>
         </div>
         <div class="sideBar">
