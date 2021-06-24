@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Link, Switch, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, useParams } from "react-router-dom";
 import "./index.css";
 import Video from "./player";
 
@@ -15,7 +15,7 @@ import Video from "./player";
 function ReactPlayerUrl() {
   let { timeStamp } = useParams();
   console.log(timeStamp);
-  const newUrl = "videos/210530_left.MP4#t=" + timeStamp;
+  const newUrl = "videos/210623_left.MP4#t=" + timeStamp;
   console.log(newUrl);
   return <Video url={newUrl} playerName="leftCamera" isWIP={false} />;
 }
@@ -24,8 +24,8 @@ ReactDOM.render(
   <div style={{ overflow: "hidden" }}>
     <Router>
       <Switch>
-        <Route path="/home">
-          <Video url="videos/210530_left.MP4" playerName="leftCamera" isWIP={false} />
+        <Route path="/210623_SJFutsal">
+          <Video url="videos/210623_left.MP4" playerName="leftCamera" isWIP={false} />
         </Route>
         <Route path="/:timeStamp" children={<ReactPlayerUrl />} />
         <Route path="/users">

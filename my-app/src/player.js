@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
-import { getHighlightTimeStamp } from "./210606_highlights";
-import { BrowserRouter as Router, Route, Link, Switch, useParams } from "react-router-dom";
+import { getHighlightTimeStamp } from "./210623_highlights";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import "./index.css";
-
 export default class Video extends Component {
   state = {
+    urlWithTime: "http://143.248.109.113:3000/",
     url: this.props.url,
     playing: true,
     state: false,
@@ -35,6 +35,7 @@ export default class Video extends Component {
 
   handleProgress = (state) => {
     console.log("onProgress", state);
+    this.setState({ urlWithTime: "http://143.248.109.113:3000/" + this.player.getCurrentTime() });
     // We only want to update time slider if we are not currently seeking
     if (!this.state.seeking) {
       this.setState(state);
@@ -55,7 +56,7 @@ export default class Video extends Component {
   handleLeftButtonPress = (camera) => {
     console.log(this.state.played);
     window.scrollTo(0, 0);
-    let newUrl = "videos/210530_left.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/210623_left.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
@@ -69,9 +70,13 @@ export default class Video extends Component {
 
   handleRightButtonPress = (camera) => {
     console.log(this.state.played);
-    let newUrl = "videos/210530_right.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/210623_right.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
+  };
+
+  handleShareButtonPress = (text, result) => {
+    alert("copied!");
   };
 
   handleDuration = (duration) => {
@@ -88,7 +93,7 @@ export default class Video extends Component {
   }
 
   render() {
-    const { playing, played, duration } = this.state;
+    const { urlWithTime, playing, played, duration } = this.state;
     const hl = getHighlightTimeStamp();
     const inner = this.getWindowDimensions();
 
@@ -99,31 +104,6 @@ export default class Video extends Component {
       else if (title[0] === "조") alignment = "flex-end";
       else alignment = "center";
       return alignment;
-    };
-
-    const ReactPlayerUrl = () => {
-      let { timeStamp } = useParams();
-      console.log(timeStamp);
-      const newUrl = this.state.url + "#t=" + timeStamp;
-      console.log(newUrl);
-      this.setState({ url: newUrl, played: timeStamp });
-      return (
-        <div>
-          <ReactPlayer
-            ref={this.ref}
-            className="react-player fixed-bottom"
-            url={newUrl}
-            width="100%"
-            height="100%"
-            controls={true}
-            playing={playing}
-            played={played}
-            onKeyDown={this.handleKeyPress}
-            onProgress={this.handleProgress}
-            onDuration={this.handleDuration}
-          />
-        </div>
-      );
     };
 
     return (
@@ -181,17 +161,26 @@ export default class Video extends Component {
           <div class="sideBarTop">
             <button class="sideBarTitle">camera</button>
             <div class="cameraButtons">
+              <CopyToClipboard
+                text={urlWithTime}
+                onCopy={(text, result, alert) => this.handleShareButtonPress(text, result, alert)}
+              >
+                <button class="cameraButton">share now</button>
+              </CopyToClipboard>
+            </div>
+            <div class="cameraButtons">
               <button class="cameraButton" onClick={() => this.handleLeftButtonPress(this.props.playerName)}>
                 left
               </button>
               {/* <div style={{ backgroundColor: "white", height: "5vh", width: "0.2vw" }} /> */}
-              <button class="cameraButton" onClick={() => this.handleMainButtonPress(this.props.playerName)}>
+              {/* <button class="cameraButton" onClick={() => this.handleMainButtonPress(this.props.playerName)}>
                 main
+              </button> */}
+
+              {/* <div style={{ backgroundColor: "white", height: 24, width: 2 }} /> */}
+              <button class="cameraButton" onClick={() => this.handleRightButtonPress(this.props.playerName)}>
+                right
               </button>
-              {/* <div style={{ backgroundColor: "white", height: 24, width: 2 }} />
-                <button class="cameraButton" onClick={() => this.handleRightButtonPress(this.props.playerName)}>
-                  right
-                </button> */}
             </div>
           </div>
           <div class="tags">
