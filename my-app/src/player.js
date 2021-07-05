@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
-import { getHighlightTimeStamp } from "./210623_highlights";
+import { getHighlightTimeStamp } from "./210704_highlights";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "./index.css";
 export default class Video extends Component {
@@ -53,30 +53,30 @@ export default class Video extends Component {
     }
   };
 
-  handleLeftButtonPress = (camera) => {
+  handleLeftButtonPress = () => {
     console.log(this.state.played);
     window.scrollTo(0, 0);
-    let newUrl = "videos/210623_left.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/210704_left.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
 
-  handleMainButtonPress = (camera) => {
+  handleMainButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/210530_main.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/210704_main.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
 
-  handleRightButtonPress = (camera) => {
+  handleRightButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/210623_right.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/210704_right.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
 
   handleShareButtonPress = (text, result) => {
-    alert("copied!");
+    alert("주소가 복사되었습니다!");
   };
 
   handleDuration = (duration) => {
@@ -100,8 +100,8 @@ export default class Video extends Component {
     const getTitleAlign = (title) => {
       let alignment;
       // console.log(title[0]);
-      if (title[0] === "일") alignment = "flex-start";
-      else if (title[0] === "조") alignment = "flex-end";
+      if (title[0] === "검") alignment = "flex-start";
+      else if (title[0] === "흰") alignment = "flex-end";
       else alignment = "center";
       return alignment;
     };
@@ -159,26 +159,26 @@ export default class Video extends Component {
         </div>
         <div class="sideBar">
           <div class="sideBarTop">
-            <button class="sideBarTitle">camera</button>
+            <button class="sideBarTitle">Re:futsal TV</button>
             <div class="cameraButtons">
               <CopyToClipboard
                 text={urlWithTime}
                 onCopy={(text, result, alert) => this.handleShareButtonPress(text, result, alert)}
               >
-                <button class="cameraButton">share now</button>
+                <button class="cameraButton">현재 시점 공유</button>
               </CopyToClipboard>
             </div>
             <div class="cameraButtons">
-              <button class="cameraButton" onClick={() => this.handleLeftButtonPress(this.props.playerName)}>
+              <button class="cameraButton" onClick={() => this.handleLeftButtonPress()}>
                 left
               </button>
               {/* <div style={{ backgroundColor: "white", height: "5vh", width: "0.2vw" }} /> */}
-              {/* <button class="cameraButton" onClick={() => this.handleMainButtonPress(this.props.playerName)}>
+              <button class="cameraButton" onClick={() => this.handleMainButtonPress()}>
                 main
-              </button> */}
+              </button>
 
               {/* <div style={{ backgroundColor: "white", height: 24, width: 2 }} /> */}
-              <button class="cameraButton" onClick={() => this.handleRightButtonPress(this.props.playerName)}>
+              <button class="cameraButton" onClick={() => this.handleRightButtonPress()}>
                 right
               </button>
             </div>
@@ -198,7 +198,7 @@ export default class Video extends Component {
                       justifyContent: getTitleAlign(val.tag),
                     }}
                   >
-                    <div>{"\r" + val.tag}</div>
+                    <div style={{ maxWidth: "15vw" }}>{"\r" + val.tag}</div>
                   </div>
                   <div class="tagTime">
                     {val.min} : {val.sec < 10 ? "0" + val.sec : val.sec}

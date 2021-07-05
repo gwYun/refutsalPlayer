@@ -15,22 +15,22 @@ import Video from "./player";
 function ReactPlayerUrl() {
   let { timeStamp } = useParams();
   console.log(timeStamp);
-  const newUrl = "videos/210623_left.MP4#t=" + timeStamp;
+  const newUrl = "videos/210704_left.MP4#t=" + timeStamp;
   console.log(newUrl);
-  return <Video url={newUrl} playerName="leftCamera" isWIP={false} />;
+  return <Video url={newUrl} isWIP={false} />;
 }
 
 ReactDOM.render(
   <div style={{ overflow: "hidden" }}>
     <Router>
       <Switch>
-        <Route path="/210623_SJFutsal">
-          <Video url="videos/210623_left.MP4" playerName="leftCamera" isWIP={false} />
+        <Route path="/210704_BohyukTeam">
+          <Video url="videos/210704_left.MP4" isWIP={false} />
         </Route>
         <Route path="/:timeStamp" children={<ReactPlayerUrl />} />
-        <Route path="/users">
+        {/* <Route path="/users">
           <div>something</div>
-        </Route>
+        </Route> */}
       </Switch>
     </Router>
   </div>,
