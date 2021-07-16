@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
-import { getHighlightTimeStamp } from "./210704_highlights";
+import { getHighlightTimeStamp } from "./210713_highlights";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "./index.css";
 export default class Video extends Component {
@@ -56,21 +56,21 @@ export default class Video extends Component {
   handleLeftButtonPress = () => {
     console.log(this.state.played);
     window.scrollTo(0, 0);
-    let newUrl = "videos/210704_left.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/210713_left.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
 
   handleMainButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/210704_main.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/210713_main.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
 
   handleRightButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/210704_right.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/210713_right.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
@@ -100,8 +100,8 @@ export default class Video extends Component {
     const getTitleAlign = (title) => {
       let alignment;
       // console.log(title[0]);
-      if (title[0] === "검") alignment = "flex-start";
-      else if (title[0] === "흰") alignment = "flex-end";
+      if (title[0] === "조") alignment = "flex-start";
+      else if (title[0] === "일") alignment = "flex-end";
       else alignment = "center";
       return alignment;
     };
@@ -173,9 +173,9 @@ export default class Video extends Component {
                 left
               </button>
               {/* <div style={{ backgroundColor: "white", height: "5vh", width: "0.2vw" }} /> */}
-              <button class="cameraButton" onClick={() => this.handleMainButtonPress()}>
+              {/* <button class="cameraButton" onClick={() => this.handleMainButtonPress()}>
                 main
-              </button>
+              </button> */}
 
               {/* <div style={{ backgroundColor: "white", height: 24, width: 2 }} /> */}
               <button class="cameraButton" onClick={() => this.handleRightButtonPress()}>

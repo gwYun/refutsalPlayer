@@ -15,7 +15,7 @@ import Video from "./player";
 function ReactPlayerUrl() {
   let { timeStamp } = useParams();
   console.log(timeStamp);
-  const newUrl = "videos/210704_left.MP4#t=" + timeStamp;
+  const newUrl = "videos/210713_left.MP4#t=" + timeStamp;
   console.log(newUrl);
   return <Video url={newUrl} isWIP={false} />;
 }
@@ -24,8 +24,8 @@ ReactDOM.render(
   <div style={{ overflow: "hidden" }}>
     <Router>
       <Switch>
-        <Route path="/210704_BohyukTeam">
-          <Video url="videos/210704_left.MP4" isWIP={false} />
+        <Route path="/210713_YJ">
+          <Video url="videos/210713_right.MP4" isWIP={false} />
         </Route>
         <Route path="/:timeStamp" children={<ReactPlayerUrl />} />
         {/* <Route path="/users">
