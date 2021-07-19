@@ -2,35 +2,30 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch, useParams } from "react-router-dom";
 import "./index.css";
-import Video from "./player";
+import Video from "./components/player";
+import Home from "./components/home";
+import NotFound from "./components/notFound";
 
-// window.addEventListener("scroll", function () {
-//   console.log(window.pageYOffset + "px");
-//   //console.log(window.innerHeight  + 'px')
-//   if (window.pageYOffset < window.innerHeight * 0.7) window.scrollTo(0, 0);
-//   else if (window.pageYOffset < window.innerHeight * 1.4) window.scrollTo(0, window.innerHeight);
-//   else window.scrollTo(0, window.innerHeight * 2);
-// });
+const fileInfo = [{ routePath: "/210713_YJ", name: "210704" }];
 
-function ReactPlayerUrl() {
+function ReactPlayerUrl(props) {
   let { timeStamp } = useParams();
   console.log(timeStamp);
-  const newUrl = "videos/210713_left.MP4#t=" + timeStamp;
+  const newUrl = props.url + "#t=" + timeStamp;
   console.log(newUrl);
-  return <Video url={newUrl} isWIP={false} />;
+  return <Video url={newUrl} name={props.name} isWIP={false} />;
 }
 
 ReactDOM.render(
   <div style={{ overflow: "hidden" }}>
     <Router>
       <Switch>
-        <Route path="/210713_YJ">
-          <Video url="videos/210713_right.MP4" isWIP={false} />
-        </Route>
-        <Route path="/:timeStamp" children={<ReactPlayerUrl />} />
-        {/* <Route path="/users">
-          <div>something</div>
-        </Route> */}
+        <Route exact path="/" component={Home} />
+        {fileInfo.map((info, index) => {
+          const url = "videos/" + info.name + "_right.MP4";
+          return <Route path={info.routePath} children={<Video url={url} name={info.name} isWIP={false} />} />;
+        })}
+        <Route component={NotFound} />
       </Switch>
     </Router>
   </div>,

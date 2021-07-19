@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
-import { getHighlightTimeStamp } from "./210713_highlights";
+import { getHighlightTimeStamp } from "../210713_highlights";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import "./index.css";
+import "../index.css";
 export default class Video extends Component {
   state = {
     urlWithTime: "http://143.248.109.113:3000/",
@@ -56,21 +56,21 @@ export default class Video extends Component {
   handleLeftButtonPress = () => {
     console.log(this.state.played);
     window.scrollTo(0, 0);
-    let newUrl = "videos/210713_left.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/" + this.props.name + "_left.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
 
   handleMainButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/210713_main.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/" + this.props.name + "main.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
 
   handleRightButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/210713_right.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/" + this.props.name + "right.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
