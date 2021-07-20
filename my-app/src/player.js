@@ -3,6 +3,7 @@ import ReactPlayer from "react-player";
 import { getHighlightTimeStamp } from "./210704_highlights";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "./index.css";
+import logo from './image/logo.png';
 export default class Video extends Component {
   state = {
     urlWithTime: "http://143.248.109.113:3000/",
@@ -56,21 +57,21 @@ export default class Video extends Component {
   handleLeftButtonPress = () => {
     console.log(this.state.played);
     window.scrollTo(0, 0);
-    let newUrl = "videos/210704_left.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/210716_left.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
 
   handleMainButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/210704_main.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/210716_main.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
 
   handleRightButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/210704_right.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/210716_right.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
@@ -120,7 +121,16 @@ export default class Video extends Component {
             // marginBottom: "3vh",
           }}
         >
+          <div class="shareButtons">
+            <CopyToClipboard
+              text={urlWithTime}
+              onCopy={(text, result, alert) => this.handleShareButtonPress(text, result, alert)}
+            >
+              <button class="shareButton">💾 현재 시점 링크 공유</button>
+            </CopyToClipboard>
+          </div>
           <div class="playerContainer">
+
             <ReactPlayer
               ref={this.ref}
               className="react-player fixed-bottom"
@@ -159,27 +169,19 @@ export default class Video extends Component {
         </div>
         <div class="sideBar">
           <div class="sideBarTop">
-            <button class="sideBarTitle">Re:futsal TV</button>
-            <div class="cameraButtons">
-              <CopyToClipboard
-                text={urlWithTime}
-                onCopy={(text, result, alert) => this.handleShareButtonPress(text, result, alert)}
-              >
-                <button class="cameraButton">현재 시점 공유</button>
-              </CopyToClipboard>
-            </div>
+            <img src={logo} width='400vw' height='95vh' alt='refutsalLogo' />
             <div class="cameraButtons">
               <button class="cameraButton" onClick={() => this.handleLeftButtonPress()}>
-                left
+                Left
               </button>
               {/* <div style={{ backgroundColor: "white", height: "5vh", width: "0.2vw" }} /> */}
               <button class="cameraButton" onClick={() => this.handleMainButtonPress()}>
-                main
+                Main
               </button>
 
               {/* <div style={{ backgroundColor: "white", height: 24, width: 2 }} /> */}
               <button class="cameraButton" onClick={() => this.handleRightButtonPress()}>
-                right
+                Right
               </button>
             </div>
           </div>
@@ -190,7 +192,8 @@ export default class Video extends Component {
                 <button
                   class="oneTag"
                   style={{ backgroundColor: index % 2 === 0 ? "white" : "#eee" }}
-                  onClick={() => this.player.seekTo(val.min * 60 + val.sec - 5)}
+                  onMouseDown={() => this.setState({ backgroundColor: '#55c325' })}
+                  onMouseUp={() => this.player.seekTo(val.min * 60 + val.sec - 5)}
                 >
                   <div
                     class="tagTitle"
