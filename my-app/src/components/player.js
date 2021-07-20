@@ -63,14 +63,14 @@ export default class Video extends Component {
 
   handleMainButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/" + this.props.name + "main.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/" + this.props.name + "_main.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
 
   handleRightButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/" + this.props.name + "right.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = "videos/" + this.props.name + "_right.MP4#t=" + this.player.getCurrentTime();
     console.log(newUrl);
     this.load(newUrl);
   };
@@ -96,6 +96,8 @@ export default class Video extends Component {
     const { urlWithTime, playing, played, duration } = this.state;
     const hl = getHighlightTimeStamp();
     const inner = this.getWindowDimensions();
+
+    console.log(this.state.url);
 
     const getTitleAlign = (title) => {
       let alignment;

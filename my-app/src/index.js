@@ -5,16 +5,9 @@ import "./index.css";
 import Video from "./components/player";
 import Home from "./components/home";
 import NotFound from "./components/notFound";
+import VideoRouter from "./components/videoRouter";
 
-const fileInfo = [{ routePath: "/210713_YJ", name: "210704" }];
-
-function ReactPlayerUrl(props) {
-  let { timeStamp } = useParams();
-  console.log(timeStamp);
-  const newUrl = props.url + "#t=" + timeStamp;
-  console.log(newUrl);
-  return <Video url={newUrl} name={props.name} isWIP={false} />;
-}
+const fileInfo = [{ routePath: "/210713_YJ", name: "210713" }];
 
 ReactDOM.render(
   <div style={{ overflow: "hidden" }}>
@@ -23,7 +16,7 @@ ReactDOM.render(
         <Route exact path="/" component={Home} />
         {fileInfo.map((info, index) => {
           const url = "videos/" + info.name + "_right.MP4";
-          return <Route path={info.routePath} children={<Video url={url} name={info.name} isWIP={false} />} />;
+          return <Route path={info.routePath} children={<VideoRouter />} />;
         })}
         <Route component={NotFound} />
       </Switch>
@@ -31,3 +24,11 @@ ReactDOM.render(
   </div>,
   document.getElementById("root")
 );
+
+function ReactPlayerUrl(props) {
+  let { timeStamp } = useParams();
+  console.log(timeStamp);
+  const newUrl = props.url + "#t=" + timeStamp;
+  console.log(newUrl);
+  return <Video url={newUrl} name={props.name} isWIP={false} />;
+}
