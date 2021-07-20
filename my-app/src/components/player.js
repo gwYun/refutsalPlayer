@@ -35,7 +35,9 @@ export default class Video extends Component {
 
   handleProgress = (state) => {
     console.log("onProgress", state);
-    this.setState({ urlWithTime: "http://143.248.109.113:3000/" + this.player.getCurrentTime() });
+    this.setState({
+      urlWithTime: `http://143.248.109.113:3000/${this.props.urlWithoutTime}_${this.player.getCurrentTime()}`,
+    });
     // We only want to update time slider if we are not currently seeking
     if (!this.state.seeking) {
       this.setState(state);

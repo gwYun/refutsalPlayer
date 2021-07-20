@@ -31,6 +31,7 @@ function VideoRouter() {
 
   console.log(url, date, team, camera, time);
   let videoUrl = `videos/${date}_${team}_${camera}.MP4#t=${time}`;
+  let videoUrlWithoutTime = `${date}_${team}_${camera}`;
 
-  return <Video url={videoUrl} name={name} isWIP={false} />;
+  return <Video url={videoUrl} urlWithoutTime={videoUrlWithoutTime} name={name} isWIP={false} />;
 }
