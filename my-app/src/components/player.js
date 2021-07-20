@@ -1,23 +1,26 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
-import { getHighlightTimeStamp } from "../210713_highlights";
+import { getHighlightTimeStamp } from "../highlights/210713_highlights";
+// import getHighlights from "./getHighlights";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "../index.css";
 export default class Video extends Component {
   state = {
-    urlWithTime: "http://143.248.109.113:3000/",
+    urlWithTime: `http://143.248.109.113:3000${this.props.url}`,
     url: this.props.url,
+    videoUrl: this.props.videoUrl,
     playing: true,
     state: false,
     controls: false,
     volume: 0.8,
     played: 0,
     duration: 0,
+    // hl: getHighlights(this.props.date, this.props.team),
   };
 
-  load = (url) => {
+  load = (videoUrl) => {
     this.setState({
-      url,
+      videoUrl: videoUrl,
       played: this.state.played,
       // loaded: 0,
       pip: false,
@@ -36,7 +39,9 @@ export default class Video extends Component {
   handleProgress = (state) => {
     console.log("onProgress", state);
     this.setState({
-      urlWithTime: `http://143.248.109.113:3000/${this.props.urlWithoutTime}_${this.player.getCurrentTime()}`,
+      urlWithTime: `http://143.248.109.113:3000/${this.props.date}_${this.props.team}_${
+        this.props.camera
+      }_${this.player.getCurrentTime()}`,
     });
     // We only want to update time slider if we are not currently seeking
     if (!this.state.seeking) {
@@ -57,22 +62,21 @@ export default class Video extends Component {
 
   handleLeftButtonPress = () => {
     console.log(this.state.played);
-    window.scrollTo(0, 0);
-    let newUrl = "videos/" + this.props.name + "_left.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = `videos/${this.props.date}_${this.props.team}_left.MP4#t=${this.player.getCurrentTime()}`;
     console.log(newUrl);
     this.load(newUrl);
   };
 
   handleMainButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/" + this.props.name + "_main.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = `videos/${this.props.date}_${this.props.team}_main.MP4#t=${this.player.getCurrentTime()}`;
     console.log(newUrl);
     this.load(newUrl);
   };
 
   handleRightButtonPress = () => {
     console.log(this.state.played);
-    let newUrl = "videos/" + this.props.name + "_right.MP4#t=" + this.player.getCurrentTime();
+    let newUrl = `videos/${this.props.date}_${this.props.team}_right.MP4#t=${this.player.getCurrentTime()}`;
     console.log(newUrl);
     this.load(newUrl);
   };
@@ -86,20 +90,11 @@ export default class Video extends Component {
     this.setState({ duration });
   };
 
-  getWindowDimensions() {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height,
-    };
-  }
-
   render() {
     const { urlWithTime, playing, played, duration } = this.state;
     const hl = getHighlightTimeStamp();
-    const inner = this.getWindowDimensions();
 
-    console.log(this.state.url);
+    // console.log(hl);
 
     const getTitleAlign = (title) => {
       let alignment;
@@ -128,7 +123,7 @@ export default class Video extends Component {
             <ReactPlayer
               ref={this.ref}
               className="react-player fixed-bottom"
-              url={this.state.url}
+              url={this.state.videoUrl}
               width="100%"
               height="100%"
               controls={true}
@@ -138,27 +133,6 @@ export default class Video extends Component {
               onProgress={this.handleProgress}
               onDuration={this.handleDuration}
             />
-            {/* <ReactPlayer
-                    ref={this.ref}
-                    className="react-player fixed-bottom"
-                    url={this.state.url + "#t=32"}
-                    width="100%"
-                    height="100%"
-                    controls={true}
-                    playing={playing}
-                    played={played}
-                    onKeyDown={this.handleKeyPress}
-                    onProgress={this.handleProgress}
-                    onDuration={this.handleDuration}
-                  /> */}
-            {/* </Route> */}
-            {/* <Route
-                  path="/t/:timeStamp"
-                  render={({ match }) => <ReactPlayerUrl timeStamp={match.params.timeStamp} />}
-                /> */}
-            {/* <Route path="/users">
-                    <div>something</div>
-                  </Route> */}
           </div>
         </div>
         <div class="sideBar">

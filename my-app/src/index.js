@@ -24,14 +24,23 @@ ReactDOM.render(
 function VideoRouter() {
   let { url } = useRouteMatch();
   let name = url.split("/")[1];
-  let date = name.split("_")[0];
-  let team = name.split("_")[1];
-  let camera = name.split("_")[2];
-  let time = name.split("_")[3];
+  let [date, team, camera, time] = name.split("_");
 
   console.log(url, date, team, camera, time);
-  let videoUrl = `videos/${date}_${team}_${camera}.MP4#t=${time}`;
-  let videoUrlWithoutTime = `${date}_${team}_${camera}`;
 
-  return <Video url={videoUrl} urlWithoutTime={videoUrlWithoutTime} name={name} isWIP={false} />;
+  let videoUrl = `videos/${date}_${team}_${camera}.MP4#t=${time}`;
+  // let videoUrlWithoutTime = `${date}_${team}_${camera}`;
+
+  return (
+    <Video
+      url={url}
+      date={date}
+      team={team}
+      camera={camera}
+      time={time}
+      videoUrl={videoUrl}
+      name={name}
+      isWIP={false}
+    />
+  );
 }
