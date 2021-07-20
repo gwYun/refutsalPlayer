@@ -4,6 +4,8 @@ import { getHighlightTimeStamp } from "../highlights/210713_highlights";
 // import getHighlights from "./getHighlights";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "../index.css";
+import logo from "../image/logo.png";
+
 export default class Video extends Component {
   state = {
     urlWithTime: `http://143.248.109.113:3000${this.props.url}`,
@@ -15,6 +17,7 @@ export default class Video extends Component {
     volume: 0.8,
     played: 0,
     duration: 0,
+    selectedIndex: 0,
     // hl: getHighlights(this.props.date, this.props.team),
   };
 
@@ -82,13 +85,23 @@ export default class Video extends Component {
   };
 
   handleShareButtonPress = (text, result) => {
-    alert("주소가 복사되었습니다!");
+    let minNow = Math.floor(this.player.getCurrentTime() / 60);
+    let secNow = Math.floor(this.player.getCurrentTime() - minNow * 60);
+    alert(`${minNow}분 ${secNow}초 시점으로 복사되었습니다.`);
   };
 
   handleDuration = (duration) => {
     console.log("onDuration", duration);
     this.setState({ duration });
   };
+
+  getHighlightBackgroundColor(index) {
+    if (index === this.state.selectedIndex) {
+      //do sth
+      return "#A0CF60";
+    }
+    return index % 2 === 0 ? "white" : "#eee";
+  }
 
   render() {
     const { urlWithTime, playing, played, duration } = this.state;
@@ -119,6 +132,14 @@ export default class Video extends Component {
             // marginBottom: "3vh",
           }}
         >
+          <div class="shareButtons">
+            <CopyToClipboard
+              text={urlWithTime}
+              onCopy={(text, result, alert) => this.handleShareButtonPress(text, result, alert)}
+            >
+              <button class="shareButton">💾 현재 시점 링크 공유</button>
+            </CopyToClipboard>
+          </div>
           <div class="playerContainer">
             <ReactPlayer
               ref={this.ref}
@@ -137,15 +158,13 @@ export default class Video extends Component {
         </div>
         <div class="sideBar">
           <div class="sideBarTop">
-            <button class="sideBarTitle">Re:futsal TV</button>
-            <div class="cameraButtons">
-              <CopyToClipboard
-                text={urlWithTime}
-                onCopy={(text, result, alert) => this.handleShareButtonPress(text, result, alert)}
-              >
-                <button class="cameraButton">현재 시점 공유</button>
-              </CopyToClipboard>
-            </div>
+            <img
+              src={logo}
+              width="70%"
+              height="90%"
+              alt="refutsalLogo"
+              style={{ display: "flex", alignSelf: "center" }}
+            />
             <div class="cameraButtons">
               <button class="cameraButton" onClick={() => this.handleLeftButtonPress()}>
                 left
@@ -167,7 +186,10 @@ export default class Video extends Component {
               return (
                 <button
                   class="oneTag"
-                  style={{ backgroundColor: index % 2 === 0 ? "white" : "#eee" }}
+                  style={{ backgroundColor: this.getHighlightBackgroundColor(index) }}
+                  onMouseDown={() => {
+                    this.setState({ selectedIndex: index });
+                  }}
                   onClick={() => this.player.seekTo(val.min * 60 + val.sec - 5)}
                 >
                   <div
@@ -178,7 +200,7 @@ export default class Video extends Component {
                   >
                     <div style={{ maxWidth: "15vw" }}>{"\r" + val.tag}</div>
                   </div>
-                  <div class="tagTime">
+                  <div class="tagTime" style={{ color: index === this.state.selectedIndex ? "white" : "#aaa" }}>
                     {val.min} : {val.sec < 10 ? "0" + val.sec : val.sec}
                   </div>
                 </button>

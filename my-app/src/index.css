@@ -1,3 +1,16 @@
+@font-face {
+  font-family: "GongGothicMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "GongGothicLight";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .playerContainer {
   /* margin-bottom: 700px; */
   width: 70vw;
@@ -21,8 +34,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  /* align-items: stretch; */
+  /* align-self: center; */
   /* background-color: #93f669; */
-  background-color: #55c325;
+  background-color: #ebf7da;
   padding: 0.4vw;
 }
 
@@ -43,8 +58,15 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  background-color: #ebf7da;
+}
 
-  margin: 0.4vw;
+.shareButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: end;
+  background-color: #ebf7da;
 }
 
 .cameraButton {
@@ -56,10 +78,26 @@
   background-color: #55c325;
   color: white;
   border-style: solid;
-  border-width: 2px;
-  border-color: white;
+  border-width: 0px;
+  padding: 0.5vw;
+  padding-inline: 2vw;
+  font-family: GongGothicLight, serif;
+}
+
+.shareButton {
+  align-items: end;
+  display: flex;
+  font-size: 1.5vw;
+  font-weight: 700;
+  text-align: left;
+  margin-top: 8;
+  background-color: #55c325;
+  color: white;
+  border-style: solid;
+  border-width: 0px;
   padding: 0.4vw;
   padding-inline: 2vw;
+  font-family: GongGothicLight, serif;
 }
 
 .tags {
@@ -78,6 +116,7 @@
   padding: 0.8vw;
   padding-inline: 1.2vw;
   padding-right: 2vw;
+  font-family: GongGothicLight, serif;
 }
 
 .tagTitle {
@@ -90,7 +129,7 @@
 
 .tagTime {
   align-self: center;
-  color: #aaa;
+  /* color: #aaa; */
   font-size: 1vw;
   font-weight: 600;
   width: 5vw;
