@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
-import { getHighlightTimeStamp } from "../highlights/210713_highlights";
-// import getHighlights from "./getHighlights";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "../index.css";
 import logo from "../image/logo.png";
-
 export default class Video extends Component {
   state = {
     urlWithTime: `http://143.248.109.113:3000${this.props.url}`,
@@ -18,7 +15,6 @@ export default class Video extends Component {
     played: 0,
     duration: 0,
     selectedIndex: 0,
-    // hl: getHighlights(this.props.date, this.props.team),
   };
 
   load = (videoUrl) => {
@@ -105,9 +101,8 @@ export default class Video extends Component {
 
   render() {
     const { urlWithTime, playing, played, duration } = this.state;
-    const hl = getHighlightTimeStamp();
 
-    // console.log(hl);
+    var hl = require(`../highlights/${this.props.date}_${this.props.team}_highlights.json`);
 
     const getTitleAlign = (title) => {
       let alignment;
@@ -182,7 +177,6 @@ export default class Video extends Component {
           </div>
           <div class="tags">
             {hl.map((val, index) => {
-              //console.log(val);
               return (
                 <button
                   class="oneTag"
